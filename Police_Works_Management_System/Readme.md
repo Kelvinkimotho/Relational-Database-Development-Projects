@@ -28,3 +28,4 @@ This is a web-based **Police Management System** designed to manage fines, audit
 - **Frontend**: HTML, CSS, Bootstrap 4
 - **Icons**: FontAwesome
 - **JavaScript Libraries**: jQuery
+  
