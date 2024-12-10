@@ -10,8 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 // Include the database connection
 include('db.inc.php');
 
+// Restrict actions to administrators only
+$is_admin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'administrator';
+
 // Handle Add Officer Operation
-if (isset($_POST['add'])) {
+if ($is_admin && isset($_POST['add'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $name = $_POST['name'];
@@ -23,10 +26,11 @@ if (isset($_POST['add'])) {
     $stmt->bind_param("sss", $username, $hashed_password, $name);
     $stmt->execute();
     header("Location: police_officers.php");
+    exit();
 }
 
 // Handle Edit Officer Operation
-if (isset($_POST['update'])) {
+if ($is_admin && isset($_POST['update'])) {
     $officer_id = $_POST['officer_id'];
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -39,16 +43,18 @@ if (isset($_POST['update'])) {
     $stmt->bind_param("sssi", $username, $hashed_password, $name, $officer_id);
     $stmt->execute();
     header("Location: police_officers.php");
+    exit();
 }
 
 // Handle Delete Officer Operation
-if (isset($_GET['delete'])) {
+if ($is_admin && isset($_GET['delete'])) {
     $officer_id = $_GET['delete'];
 
     $stmt = $conn->prepare("DELETE FROM police_officers WHERE officer_id = ?");
     $stmt->bind_param("i", $officer_id);
     $stmt->execute();
     header("Location: police_officers.php");
+    exit();
 }
 
 // Fetch all police officers with search functionality
@@ -62,7 +68,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Check if we're editing an officer
-if (isset($_GET['id'])) {
+if ($is_admin && isset($_GET['id'])) {
     $officer_id = $_GET['id'];
     $sql_edit = "SELECT * FROM police_officers WHERE officer_id = $officer_id";
     $edit_result = $conn->query($sql_edit);
@@ -86,28 +92,30 @@ if (isset($_GET['id'])) {
     <div class="content-container">
         <h2>Manage Police Officers</h2>
 
-        <!-- Add or Edit Officer Form -->
-        <div class="form-container">
-            <h3><?php echo isset($officer) ? 'Edit Officer' : 'Add New Officer'; ?></h3>
-            <form method="POST">
-                <?php if (isset($officer)): ?>
-                    <input type="hidden" name="officer_id" value="<?php echo $officer['officer_id']; ?>">
-                <?php endif; ?>
+        <!-- Add or Edit Officer Form (Only for Administrators) -->
+        <?php if ($is_admin): ?>
+            <div class="form-container">
+                <h3><?php echo isset($officer) ? 'Edit Officer' : 'Add New Officer'; ?></h3>
+                <form method="POST">
+                    <?php if (isset($officer)): ?>
+                        <input type="hidden" name="officer_id" value="<?php echo $officer['officer_id']; ?>">
+                    <?php endif; ?>
 
-                <label for="username">Username:</label>
-                <input type="text" name="username" value="<?php echo isset($officer) ? $officer['username'] : ''; ?>" required>
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" value="<?php echo isset($officer) ? $officer['username'] : ''; ?>" required>
 
-                <label for="password">Password:</label>
-                <input type="password" name="password" value="<?php echo isset($officer) ? '' : ''; ?>" required>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" value="<?php echo isset($officer) ? '' : ''; ?>" required>
 
-                <label for="name">Name:</label>
-                <input type="text" name="name" value="<?php echo isset($officer) ? $officer['name'] : ''; ?>" required>
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" value="<?php echo isset($officer) ? $officer['name'] : ''; ?>" required>
 
-                <button type="submit" name="<?php echo isset($officer) ? 'update' : 'add'; ?>" class="btn btn-primary">
-                    <?php echo isset($officer) ? 'Update Officer' : 'Add Officer'; ?>
-                </button>
-            </form>
-        </div>
+                    <button type="submit" name="<?php echo isset($officer) ? 'update' : 'add'; ?>" class="btn btn-primary">
+                        <?php echo isset($officer) ? 'Update Officer' : 'Add Officer'; ?>
+                    </button>
+                </form>
+            </div>
+        <?php endif; ?>
 
         <!-- Search Form -->
         <form method="GET" class="mb-3">
@@ -130,11 +138,15 @@ if (isset($_GET['id'])) {
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?php echo $row['officer_id']; ?></td>
-                        <td><?php echo $row['username']; ?></td>
-                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                        <td><?php echo htmlspecialchars($row['name']); ?></td>
                         <td>
-                            <a href="police_officers.php?id=<?php echo $row['officer_id']; ?>" class="btn btn-success">Update</a>
-                            <a href="?delete=<?php echo $row['officer_id']; ?>" onclick="return confirm('Are you sure you want to delete this officer?');" class="btn btn-danger">Delete</a>
+                            <?php if ($is_admin): ?>
+                                <a href="police_officers.php?id=<?php echo $row['officer_id']; ?>" class="btn btn-success">Update</a>
+                                <a href="?delete=<?php echo $row['officer_id']; ?>" onclick="return confirm('Are you sure you want to delete this officer?');" class="btn btn-danger">Delete</a>
+                            <?php else: ?>
+                                <span class="text-danger">Restricted</span>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endwhile; ?>
