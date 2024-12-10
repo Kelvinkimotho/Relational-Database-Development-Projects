@@ -1,0 +1,391 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6; /* Default background color */
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Ensure content starts at the top */
+}
+
+/* Background Image on Dashboard Page */
+body.dashboard-page {
+    background: url('../img/background2.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #2C3E50;
+    padding: 15px;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Make sure navbar is always on top */
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: center; /* Center the navbar items */
+    align-items: center; /* Vertically align items */
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    display: inline-block; /* Ensure horizontal stacking */
+}
+
+.navbar a:hover {
+    color: #3498db;
+}
+
+/* Ensure the page content doesn’t overlap with the fixed navbar */
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    padding: 120px 20px 20px; /* Padding to avoid content overlap with the navbar */
+    align-items: center;
+    flex-grow: 1; /* Allow it to expand */
+}
+
+/* Dashboard Box */
+.dashboard-box {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+}
+
+/* Dashboard Title */
+.dashboard-box h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #2C3E50;
+}
+
+/* Welcome Message */
+.dashboard-box p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    text-align: left;
+}
+
+.dashboard-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #2C3E50;
+}
+
+.dashboard-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.dashboard-content ul li {
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.dashboard-content ul li a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.dashboard-content ul li a:hover {
+    color: #2980b9;
+}
+
+/* Footer */
+.footer {
+    background-color: #2C3E50;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Push footer to the bottom */
+    width: 100%;
+}
+
+.footer p {
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar a {
+        font-size: 16px;
+    }
+
+    .dashboard-box {
+        padding: 20px;
+    }
+
+    .dashboard-box h2 {
+        font-size: 2rem;
+    }
+
+    .dashboard-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-content ul li {
+        font-size: 1rem;
+    }
+}
+
+/* General Styles for Elements */
+h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Form Styles */
+.form-container {
+    background-color: #e1e8f0; /* Professional light blue background color */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px; /* Added margin for spacing */
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-container input,
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    border-color: #007bff;
+    background-color: #ffffff;
+}
+
+/* Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: bold;
+}
+
+.data-table td {
+    background-color: white;
+    color: #555;
+}
+
+.data-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.data-table a {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.data-table a:hover {
+    color: #0056b3;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #2C3E50;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Make sure navbar is always on top */
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    color: #3498db;
+}
+
+/* Ensure the page content doesn’t overlap with the fixed navbar */
+.login-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 80px; /* Padding to avoid overlap with navbar */
+    flex-grow: 1; /* Allow content to grow */
+}
+
+/* Login Box */
+.login-box {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Title */
+.login-box h2 {
+    font-size: 2rem;
+    color: #2C3E50;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Error Message */
+.error-message {
+    color: #e74c3c;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Links Section */
+.links {
+    margin-top: 20px;
+}
+
+.links a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    background-color: #2C3E50;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer p {
+    font-size: 1rem;
+}
+
+/* Button Styling (no text styling) */
+button {
+    all: unset; /* Removes all styling */
+    cursor: pointer; /* Ensures button is clickable */
+}
+
+/* Navbar Logo Styles */
+.navbar-logo {
+    height: 50px; /* Increase the logo size */
+    margin-right: 15px; /* Add some space between the logo and the text */
+    vertical-align: middle; /* Align the logo vertically with the text */
+    transition: transform 0.3s ease-in-out; /* Smooth animation for hover effect */
+}
+
+/* Add hover effect to logo */
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.1); /* Slightly increase the logo size on hover */
+}
+
+/* Optional: Add a stylish box shadow to the logo */
+.navbar-logo {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+    border-radius: 5px; /* Slight rounding of corners */
+}
+
+/* Optional: Change the logo opacity on hover */
+.navbar-brand:hover .navbar-logo {
+    opacity: 0.8;
+}
+ 
+input{
+    margin: 10px;
+}
