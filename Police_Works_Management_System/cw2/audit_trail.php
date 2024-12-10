@@ -10,8 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 // Include the database connection
 include('db.inc.php');
 
+// Restrict add, update, and delete actions to administrators only
+$is_admin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'administrator';
+
 // Handle Add or Update Operation
-if (isset($_POST['add']) || isset($_POST['update'])) {
+if (($is_admin) && (isset($_POST['add']) || isset($_POST['update']))) {
     $action = $_POST['action'];
     $user_type = $_SESSION['user_role']; // Assuming role is stored in session
     $user_id = $_SESSION['user_id'];
@@ -35,7 +38,7 @@ if (isset($_POST['add']) || isset($_POST['update'])) {
 }
 
 // Handle Delete Operation
-if (isset($_GET['delete'])) {
+if ($is_admin && isset($_GET['delete'])) {
     $audit_id = $_GET['delete'];
 
     // Delete audit trail entry
@@ -71,7 +74,7 @@ if (!$result) {
 }
 
 // Check if we're editing an entry
-if (isset($_GET['id'])) {
+if ($is_admin && isset($_GET['id'])) {
     $audit_id = $_GET['id'];
     $sql_edit = "SELECT * FROM audit_trail WHERE audit_id = $audit_id";
     $edit_result = $conn->query($sql_edit);
@@ -95,22 +98,24 @@ if (isset($_GET['id'])) {
     <div class="content-container">
         <h2>Audit Trail</h2>
 
-        <!-- Add or Edit Audit Trail Form -->
-        <div class="form-container">
-            <h3><?php echo isset($audit) ? 'Edit Audit Trail Entry' : 'Add New Audit Trail Entry'; ?></h3>
-            <form method="POST">
-                <?php if (isset($audit)): ?>
-                    <input type="hidden" name="audit_id" value="<?php echo $audit['audit_id']; ?>">
-                <?php endif; ?>
+        <!-- Add or Edit Audit Trail Form (Only for Administrators) -->
+        <?php if ($is_admin): ?>
+            <div class="form-container">
+                <h3><?php echo isset($audit) ? 'Edit Audit Trail Entry' : 'Add New Audit Trail Entry'; ?></h3>
+                <form method="POST">
+                    <?php if (isset($audit)): ?>
+                        <input type="hidden" name="audit_id" value="<?php echo $audit['audit_id']; ?>">
+                    <?php endif; ?>
 
-                <label for="action">Action:</label>
-                <input type="text" name="action" id="action" value="<?php echo isset($audit) ? $audit['action'] : ''; ?>" required>
+                    <label for="action">Action:</label>
+                    <input type="text" name="action" id="action" value="<?php echo isset($audit) ? $audit['action'] : ''; ?>" required>
 
-                <button type="submit" name="<?php echo isset($audit) ? 'update' : 'add'; ?>"  class="btn btn-primary">
-                    <?php echo isset($audit) ? 'Update Entry' : 'Add Entry'; ?>
-                </button>
-            </form>
-        </div>
+                    <button type="submit" name="<?php echo isset($audit) ? 'update' : 'add'; ?>" class="btn btn-primary">
+                        <?php echo isset($audit) ? 'Update Entry' : 'Add Entry'; ?>
+                    </button>
+                </form>
+            </div>
+        <?php endif; ?>
 
         <!-- Search Form -->
         <form method="GET" class="mb-3">
@@ -138,8 +143,12 @@ if (isset($_GET['id'])) {
                         <td><?php echo htmlspecialchars($row['action']); ?></td>
                         <td><?php echo htmlspecialchars($row['action_timestamp']); ?></td>
                         <td>
-                            <a href="audit_trail.php?id=<?php echo $row['audit_id']; ?>" class="btn btn-success">Update</a>
-                            <a href="?delete=<?php echo $row['audit_id']; ?>" onclick="return confirm('Are you sure you want to delete this entry?');" class="btn btn-danger">Delete</a>
+                            <?php if ($is_admin): ?>
+                                <a href="audit_trail.php?id=<?php echo $row['audit_id']; ?>" class="btn btn-success">Update</a>
+                                <a href="?delete=<?php echo $row['audit_id']; ?>" onclick="return confirm('Are you sure you want to delete this entry?');" class="btn btn-danger">Delete</a>
+                            <?php else: ?>
+                                <span class="text-danger">Restricted</span>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endwhile; ?>
