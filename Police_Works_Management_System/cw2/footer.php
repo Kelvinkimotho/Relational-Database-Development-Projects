@@ -31,7 +31,7 @@
 
 <!-- Back to Top Button -->
 <button id="backToTop" class="btn" title="Back to Top">
-    <i class="fas fa-chevron-up"></i>
+    <i class="fas fa-arrow-up"></i> <!-- Up arrow icon -->
 </button>
 
 <!-- Include FontAwesome for Social Icons -->
@@ -85,6 +85,6 @@
     }
 
     #backToTop i {
-        margin: 0;
+        color: black;  /* Set the arrow icon color to black */
     }
 </style>
