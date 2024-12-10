@@ -60,12 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login - Police System</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- Bootstrap CSS Link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
 <body>
     <?php include('navbar.php'); ?>
     
     <div class="form-container">
-        <div >
+        <div>
             <h2>Login</h2>
 
             <?php if ($error): ?>
@@ -83,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" id="password" name="password" required>
                 </div>
 
-                <button type="submit"  class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Login</button>
                 <div class="links">
                     <a href="register.php">Register</a> | 
                     <a href="forgot-password.php">Forgot Password?</a>
