@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="container-fluid">
     <!-- Logo Section -->
     <a class="navbar-brand text-light" href="index.php">
-      <img src="../assets/img/logo.jpg" alt="" class="navbar-logo">
+      <img src="../assets/img/logo.jpg" alt="" class="navbar-logo"> Police Works!!
     </a>
 
     <!-- Hamburger Toggle for Mobile View -->
@@ -41,9 +41,8 @@ if (session_status() === PHP_SESSION_NONE) {
           <li class="nav-item">
             <a class="nav-link text-dark" href="dashboard.php">Dashboard</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="audit_trail.php">Audit Trail</a>
-          </li>
+
+          <!-- Common Links for All Logged-In Users -->
           <li class="nav-item">
             <a class="nav-link text-dark" href="fines.php">Fines</a>
           </li>
@@ -56,12 +55,20 @@ if (session_status() === PHP_SESSION_NONE) {
           <li class="nav-item">
             <a class="nav-link text-dark" href="vehicles.php">Vehicles</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="police_officers.php">Officers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="administrators.php">Administrators</a>
-          </li>
+
+          <!-- Administrator-Specific Links -->
+          <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'administrator'): ?>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="audit_trail.php">Audit Trail</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="police_officers.php">Officers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="administrators.php">Administrators</a>
+            </li>
+          <?php endif; ?>
+
           <li class="nav-item">
             <a class="nav-link text-dark" href="logout.php">Logout</a>
           </li>
